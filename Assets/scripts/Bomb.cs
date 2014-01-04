@@ -8,9 +8,21 @@ public class Bomb : MonoBehaviour {
 
 	public float Lifetime = 10.0f;
 
+	private bool frozen = false;
+
+	public void freeze(){
+		this.frozen = true;
+	}
+	
+	public void unfreeze(){
+		this.frozen = false;
+	}
+
 	void Update ()
 	{
-		transform.position += Direction * Speed * Time.deltaTime;
+		if(!frozen){
+		  transform.position += Direction * Speed * Time.deltaTime;
+		}
 	}
 	
 }

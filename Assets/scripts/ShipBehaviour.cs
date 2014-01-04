@@ -10,20 +10,33 @@ public class ShipBehaviour : MonoBehaviour {
 	private int updateCount=0;
 	private int direction=1;
 
+	private bool frozen = false;
+
 	// Use this for initialization
 	void Start () {
 	
 	}
+
+	public void freeze(){
+		this.frozen = true;
+	}
+
+	public void unfreeze(){
+		this.frozen = false;
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		updateCount++;
-		if(updateCount % 15 == 0){
-		  do{
-		      direction = Random.Range(-1, 2);
-			}while(direction == 0);
-			Instantiate(PrefabAmmo, GunPosition.transform.position, PrefabAmmo.transform.rotation);
-		}
-		transform.position = new Vector3(Mathf.Clamp(transform.position.x + direction * Speed * Time.deltaTime, MinMaxX.x, MinMaxX.y), transform.position.y, transform.position.z);
+		if(!frozen){
+		 updateCount++;
+		 if(updateCount % 15 == 0){
+		   do{
+		       direction = Random.Range(-1, 2);
+			 }while(direction == 0);
+			 Instantiate(PrefabAmmo, GunPosition.transform.position, PrefabAmmo.transform.rotation);
+			 audio.Play();
+		 }
+		 transform.position = new Vector3(Mathf.Clamp(transform.position.x + direction * Speed * Time.deltaTime, MinMaxX.x, MinMaxX.y), transform.position.y, transform.position.z);
+	   }
 	}
 }
