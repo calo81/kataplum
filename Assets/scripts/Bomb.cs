@@ -8,18 +8,9 @@ public class Bomb : MonoBehaviour {
 
 	public float Lifetime = 10.0f;
 
-	void Start ()
-	{
-		Invoke("DestroyMe", Lifetime);
-	}
-
 	void Update ()
 	{
 		transform.position += Direction * Speed * Time.deltaTime;
 	}
-
-	void DestroyMe()
-	{
-		Destroy(gameObject);
-	}
+	
 }
