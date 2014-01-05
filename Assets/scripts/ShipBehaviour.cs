@@ -8,7 +8,7 @@ public class ShipBehaviour : MonoBehaviour {
 	public GameObject GunPosition = null;
 	public int BombsPerLevel = 30;
 
-	private int updateCount=0;
+	private long updateCount=0;
 	private int direction=1;
 	public int BombCount = 0;
 	private bool ChangingLevel = false;
@@ -63,7 +63,12 @@ public class ShipBehaviour : MonoBehaviour {
 					NextLevel();
 			 }
 		 }
-		 transform.position = new Vector3(Mathf.Clamp(transform.position.x + direction * Speed * Time.deltaTime, MinMaxX.x, MinMaxX.y), transform.position.y, transform.position.z);
+		    Vector3 newPosition = new Vector3(Mathf.Clamp(transform.position.x + direction * Speed * Time.deltaTime, MinMaxX.x, MinMaxX.y), transform.position.y, transform.position.z);
+			if(transform.position == newPosition){
+				direction = -direction;
+				newPosition = new Vector3(Mathf.Clamp(transform.position.x + direction * Speed * Time.deltaTime, MinMaxX.x, MinMaxX.y), transform.position.y, transform.position.z);;  
+			}
+			transform.position = newPosition;
 	   }
 	}
 
@@ -73,8 +78,11 @@ public class ShipBehaviour : MonoBehaviour {
 		ChangingLevel = true;
 		BombCount = 0;
 		BombsEveryNumberFrames -= 10; 
-		if(BombsEveryNumberFrames == 0){
+		if(BombsEveryNumberFrames <= 0){
 			BombsEveryNumberFrames = 1; 
+			BombsPerLevel += 5;
+			Speed += 10;
+			FramesChangeDirection -= 1;
 		}
 	}
 
