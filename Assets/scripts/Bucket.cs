@@ -22,6 +22,10 @@ public class Bucket : MonoBehaviour {
 		this.frozen = false;
 	}
 
+	void Awake() {
+		bucketNumber = 1;  
+	}
+
   void Update ()
   {
 	if(!frozen){
@@ -34,5 +38,8 @@ public class Bucket : MonoBehaviour {
 	{
 		audio.Play();
 		Destroy (other.gameObject);
+		ScoreGlobal score = FindObjectOfType(typeof(ScoreGlobal)) as ScoreGlobal;
+		score.Score += 100;
 	}
+	
 }

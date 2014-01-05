@@ -37,6 +37,7 @@ public class floor : MonoBehaviour {
 	{
 		ShipBehaviour ship = FindObjectOfType(typeof(ShipBehaviour)) as ShipBehaviour;
 		ship.freeze();
+		ship.BombCount = 0;
 		Bomb[] bombs = FindObjectsOfType(typeof(Bomb)) as Bomb[];
 		foreach(Bomb bomb in bombs){
 			bomb.freeze();
@@ -70,6 +71,12 @@ public class floor : MonoBehaviour {
 	}
 
 	void gameOver() {
-	  
+		ScoreGlobal score = FindObjectOfType(typeof(ScoreGlobal)) as ScoreGlobal;
+		score.GameOver();
+		Invoke("restart",3);
+	}
+
+	void restart() {
+		Application.LoadLevel(0);
 	}
 }
